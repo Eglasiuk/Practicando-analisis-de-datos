@@ -1,3 +1,17 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Analizando una base de datos de marketing",
+    "\n",
+    "This is a notebook for the medium article [Creating conditional columns on Pandas with Numpy select() and where() methods](https://bindichen.medium.com/creating-conditional-columns-on-pandas-with-numpy-select-and-where-methods-8ee6e2dbd5d5)\n",
+    "\n",
+    "Please check out article for instructions\n",
+    "\n",
+    "**License**: [BSD 2-Clause](https://opensource.org/licenses/BSD-2-Clause)"
+   ]
 # ==============================================================================
 from google.colab import output
 # Tratamiento de datos
