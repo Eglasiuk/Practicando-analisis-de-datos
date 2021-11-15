@@ -33,14 +33,49 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn import tree
-from sklearn import metrics
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import GridSearchCV
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import Pipeline
-from sklearn.tree import DecisionTreeClassifier
 
-output.clear()
+# ==============================================================================
+#marketing
+url = "https://docs.google.com/spreadsheets/d/1kAlBt-8nVL1a8noGFr9Fm5pw8L63Gaev/edit?usp=sharing&ouid=103711512915088173781&rtpof=true&sd=true"
+
+path = 'https://drive.google.com/uc?export=download&id=' + url.split('/')[-2]
+df = pd.read_excel(path)
+
+
+# ==============================================================================
+#Analisis exploratorio
+df.shape
+df.head(10)
+df.info()
+print(f"\n{'-'*50}\n\nVariables:\n")
+df.dtypes
+# Faltan algunos incomes
+
+df.describe()
+
+# Corregir nombre de la Columnas 'Income'
+df.rename(columns={' Income ':'Income'}, inplace=True)
+
+# No hay aparentes repeticiones ni errores en las columnas de texto, aunque anda a saber que hay adentro de Marital_Status
+print(df['Education'].unique())
+print(df['Marital_Status'].unique())
+print(df['Country'].unique())
+
+## 2n Cycle es como un masters aparentemente. Sistema bologna. Sobre esto puedo hacer el cluster
+df=df.replace({'2n Cycle':'Master'})
+df['Education'].unique()
+
+# Cambio de códcos de paises por nombre completo
+
+ISO = { 'SA' : 'Saudi Arabia', 'CA' : 'Canada', 'SP' : 'Spain', 'GER' : 'Germany', 'IND' : 'India', 'US' : 'United States', 'AUS' : 'Australia', 'ME' : 'Montenegro'}
+df = df.replace({'Country':ISO})
+
+df['Education']= pd.Categorical(df['Education'],categories=df['Education'].unique())
+df['Marital_Status']= pd.Categorical(df['Marital_Status'],categories=df['Marital_Status'].unique())
+df['Country']= pd.Categorical(df['Country'],categories=df['Country'].unique())
+# ==============================================================================
+#FECHAS Y ANIOS 
+# Buscar los años de nacimiento problematicos (min Year_Birth =1893)
+df_year=df[df['Year_Birth']<1940]
+df_year
+
