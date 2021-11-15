@@ -79,3 +79,63 @@ df['Country']= pd.Categorical(df['Country'],categories=df['Country'].unique())
 df_year=df[df['Year_Birth']<1940]
 df_year
 
+
+# Como en 2015 alguien nacido en 1900 tendría 115 y no parece ser un simple error de entrada (quien confunde 2000 con 1900?) los dropeo y reseteo el index
+df=df.drop([232,1578,2205])
+df['index']=[i for i in range (0,2237)]
+df=df.set_index('index')
+df
+
+# Convertir la columna 'Dt_Customer' a fecha - Habría que revisar bien, pero me pareció que lo hacia correctamente
+df['Dt_Customer']=pd.to_datetime(df['Dt_Customer'],dayfirst=True)
+df
+
+# Para ver de que en el 2015 parecía la fecha en que se saco la base da datos
+max(df['Dt_Customer'])
+
+# Crear dos colmunas, de días desde que es cliente y edad
+
+df['Days_Customer']=(dt.datetime(2015,1,1)-df['Dt_Customer']).dt.days
+df['Age']=[2015-i for i in df['Year_Birth']]
+df
+
+# Reorganizar las columnas del dataframe (debe haber una forma mas elegante de hacer lo mismo)
+clist=list(df.columns)
+clist.insert(2,df.columns[29])
+clist.insert(9,df.columns[28])
+clist.pop()
+clist.pop()
+df=df[clist]
+df
+
+# ==============================================================================
+#FAMILIAS
+# Agrupamos la variable : maritial staus, kidhome, teen home. Para buscar el numero total de miembros de la familia.
+# Tomamos como Married y together como 2 personas que viven juntos, por eso creamos una nueva variable cupleSize.
+
+cupleSize= []
+n=0
+for F in df.Marital_Status:
+  if F == "Married" or F=="Together" :
+    cupleSize.append(2)
+  else: 
+    cupleSize.append( 1)
+
+df.insert(loc=5, column='cupleSize', value=cupleSize)
+
+df.head(10)
+
+# Creamos la variable familySize como suma de las otras columnas
+
+familySize= df.cupleSize + df.Kidhome + df.Teenhome
+df.insert(loc=9, column='familySize', value=familySize)
+
+# Creamos una nueva columna con el monto total 
+MntTotal = df.MntFishProducts + df.MntFruits + df.MntGoldProds + df.MntMeatProducts + df.MntWines
+df.insert(loc=13, column='MntTotal', value = MntTotal)
+
+# Modificamos el marital_status
+
+df = df.replace({'YOLO':'Single', 'Absurd':'Single', 'Alone':'Single'})
+
+# ============================================================================== Final
