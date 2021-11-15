@@ -1,0 +1,46 @@
+# ==============================================================================
+from google.colab import output
+# Tratamiento de datos
+# ==============================================================================
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import statsmodels.stats.api as sms
+import scipy as sc
+import datetime as dt
+
+# Gráficos
+# ==============================================================================
+import matplotlib.pyplot as plt
+import matplotlib.font_manager
+from matplotlib import style
+style.use('ggplot') or plt.style.use('ggplot')
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import seaborn as sns
+
+!pip install pandas-profiling==3.0.0
+import pandas_profiling as pp
+
+# Preprocesado y modelado
+# ==============================================================================
+from sklearn.decomposition import PCA
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import scale
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import tree
+from sklearn import metrics
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.tree import DecisionTreeClassifier
+
+output.clear()
